@@ -398,7 +398,7 @@ def show_home_tab(user):
                     <h4>{club['icon']} {club['name']}</h4>
                     <p>{club['description']}</p>
                     <p><strong>회장:</strong> {club['president']}</p>
-                    <a href="https://meet.google.com/dbx-ozrs-bma">회의 링크(전체 전용)</a>
+                    <p><a href="https://meet.google.com/dbx-ozrs-bma">회의 링크(전체 전용)</a></p>
                 </div>
                 """, unsafe_allow_html=True)
 
