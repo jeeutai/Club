@@ -547,21 +547,39 @@ def show_account_management():
                     username, password, name, role
                 )
                 if success:
-                    # Add to clubs
                     for club in selected_clubs:
                         st.session_state.data_manager.add_user_to_club(username, club)
                     st.success(f"계정 '{username}' 생성 완료!")
                     st.rerun()
                 else:
                     st.error("이미 존재하는 아이디입니다.")
-    
-    # Account list
+
+    # 기존 계정 표시 및 편집
     st.markdown("#### 기존 계정")
     accounts_df = st.session_state.data_manager.load_csv('accounts')
     user_clubs_df = st.session_state.data_manager.load_csv('user_clubs')
+
     if not accounts_df.empty:
-        st.dataframe(accounts_df[['username', 'name', 'role', 'created_date', 'password']], use_container_width=True)
-        st.dataframe(user_clubs_df[['username', 'club_name']])
+        st.markdown("**계정 정보**")
+        edited_accounts_df = st.data_editor(
+            accounts_df[['username', 'name', 'role', 'created_date', 'password']],
+            use_container_width=True,
+            num_rows="dynamic",
+            key="edit_accounts"
+        )
+
+        st.markdown("**소속 동아리**")
+        edited_user_clubs_df = st.data_editor(
+            user_clubs_df[['username', 'club_name']],
+            use_container_width=True,
+            num_rows="dynamic",
+            key="edit_user_clubs"
+        )
+
+        if st.button("변경사항 저장"):
+            st.session_state.data_manager.save_csv('accounts', edited_accounts_df)
+            st.session_state.data_manager.save_csv('user_clubs', edited_user_clubs_df)
+            st.success("변경사항이 저장되었습니다.")
 
 def show_club_management():
     st.markdown("#### 동아리 생성")
