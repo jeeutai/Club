@@ -559,7 +559,8 @@ def show_account_management():
     st.markdown("#### 기존 계정")
     accounts_df = st.session_state.data_manager.load_csv('accounts')
     if not accounts_df.empty:
-        st.dataframe(accounts_df[['username', 'name', 'role', 'created_date']], use_container_width=True)
+        st.dataframe(accounts_df[['username', 'name', 'role', 'created_date', 'password']], use_container_width=True)
+        st.dataframe(user_clubs_df[['username', 'club_name']]
 
 def show_club_management():
     st.markdown("#### 동아리 생성")
